@@ -7,9 +7,9 @@ import PropTypes from 'prop-types'
 
 // Components
 
-
 // Actions
-import { setAlert } from '../../actions/alert'
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth/auth';
 
 const Register = (props) => {
     const [formData, setFormData] = useState({
@@ -18,11 +18,11 @@ const Register = (props) => {
         email: '',
         password: '',
         password2: '',
-    })
+    });
 
     const { firstname, lastname, email, password, confirmpwd } = formData;
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value})
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault()
         if (password !== confirmpwd){
             props.setAlert('password does not match', 'danger')
@@ -35,19 +35,7 @@ const Register = (props) => {
             password,
             confirmpwd
         }
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            const body = JSON.stringify(newUser)
-            const res = await axios.post('http://localhost:5000/api/v1/users/register', body, config);
-            console.log('response: ', res);
-        }
-        catch(err) {
-            console.error(err.response.data)
-        }
+        props.register(newUser);
     }
 
     return (
@@ -58,10 +46,10 @@ const Register = (props) => {
         </p>
         <form className="form" onSubmit={onSubmit} action="create-profile.html">
           <div className="form-group">
-            <input type="text" onChange={onChange} placeholder="Firstname" name="firstname" required value={firstname} />
+            <input type="text" onChange={onChange} placeholder="Firstname" name="firstname" value={firstname} />
           </div>
           <div className="form-group">
-            <input type="text" onChange={onChange} placeholder="Lastname" name="lastname" required value={lastname} />
+            <input type="text" onChange={onChange} placeholder="Lastname" name="lastname" value={lastname} />
           </div>
           <div className="form-group">
             <input type="email" onChange={onChange} placeholder="Email Address" name="email" value={email} />
@@ -104,4 +92,4 @@ Register.propTypes = {
 }
 
 // Add the action(s) to the connect method
-export default connect(null, { setAlert })(Register)
+export default connect(null, { setAlert, register })(Register)
