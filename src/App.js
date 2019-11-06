@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Landing from './components/layout/Landing';
 // Components
 import Navbar from './components/layout/Navbar';
@@ -9,11 +9,21 @@ import Alert from './components/utils/Alert';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+
 import store from './store';
 
 import './App.css';
+import { loadUser } from './actions/auth/auth';
+import setAuthenticationToken from './utils/setAuthenticationToken';
 
-const App = () => (
+if(localStorage.devprofiletkn) {
+  setAuthenticationToken(localStorage.devprofiletkn);
+}
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, [])
+  return (
   // Fragment wont show up in the dom
   <Provider store={store}>
     <Router>
@@ -30,6 +40,7 @@ const App = () => (
       </Fragment>
     </Router>
   </Provider>
-);
+  )
+};
 
 export default App;

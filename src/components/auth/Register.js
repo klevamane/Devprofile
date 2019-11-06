@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
@@ -11,7 +10,8 @@ import PropTypes from 'prop-types'
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth/auth';
 
-const Register = (props) => {
+const Register = (props) => {// props can also be destructured as ({register, isAuthenticated})
+    
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -36,6 +36,9 @@ const Register = (props) => {
             confirmpwd
         }
         props.register(newUser);
+    }
+    if(props.isAuthenticated) {
+        return <Redirect to="dashboard" />
     }
 
     return (
@@ -91,5 +94,9 @@ Register.propTypes = {
     props: PropTypes.object, 
 }
 
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
 // Add the action(s) to the connect method
-export default connect(null, { setAlert, register })(Register)
+export default connect(mapStateToProps, { setAlert, register })(Register)
