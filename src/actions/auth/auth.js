@@ -1,13 +1,9 @@
 import axios from 'axios';
 
-import {REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT} from '../types';
+import {REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, CLEAR_PROFILE} from '../types';
 import { setAlert } from '../alert'
-import setAuthenticationToken from '../../utils/setAuthenticationToken';
 
 export const loadUser = () => async dispatch => {
-    if(localStorage.devprofiletkn) {
-        setAuthenticationToken(localStorage.devprofiletkn);
-    }
     try {
         const res = await axios.get('http://localhost:5000/api/v1/users/current');
         dispatch({
@@ -58,11 +54,12 @@ export const login = ({ email, password }) => async dispatch => {
     const data = JSON.stringify({ email, password });
     try {
         const res = await axios.post('http://localhost:5000/api/v1/users/login', data, configuration)
-        console.log('response detatils login ', res.data);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data.token
         })
+
+        loadUser();
     }
     catch(err) {
         const errors = err.response.data;
@@ -76,7 +73,6 @@ export const login = ({ email, password }) => async dispatch => {
 }
 
 export const logout = () => dispatch => {
-    dispatch({
-        type: LOGOUT
-    })
+    dispatch({ type: CLEAR_PROFILE });
+    dispatch({ type: LOGOUT });
 }

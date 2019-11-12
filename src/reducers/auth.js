@@ -1,4 +1,4 @@
-import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT} from '../actions/types';
+import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from '../actions/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -30,20 +30,20 @@ export default function(state = initialState, action) {
                 loading: false
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem('devprofiletkn', payload);
             return {
                 ...state,
                 token: payload,
                 isAuthenticated: true,
-                laoding: false
+                loading: false
             }
         case USER_LOADED:
             return {
                 ...state,
                 isAuthenticated: true,
                 user: payload,
-                laoding: false,
+                loading: false,
             }
-        
         default:
             return state;
     }

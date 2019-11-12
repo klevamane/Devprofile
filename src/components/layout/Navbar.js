@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth/auth';
@@ -12,7 +12,11 @@ const Navbar = ({auth: { isAuthenticated, loading }, logout}) => {
         logout();
     }
     if(isAuthenticated) {
-        loginLogoutLink = <li><a href="#!" onClick={logoutUser}>Logout</a></li>;
+        loginLogoutLink =
+        <Fragment>
+            <li><Link to="dashboard" >Dashboard</Link></li>
+            <li><a href="#!" onClick={logoutUser}>Logout</a></li>
+        </Fragment> 
     }
     else {
         loginLogoutLink = 
