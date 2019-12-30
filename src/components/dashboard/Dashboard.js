@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import DashboardActions from './DashboardActions';
+
 // Actions
 import { getCurrentProfile } from '../../actions/profile';
 
@@ -19,7 +21,8 @@ import Loader from '../utils/Loader';
             <p className="lead">
                 <i>Welcome { user && user.firstname }</i>
             </p>
-            {profile !== null ? <Fragment>has profile</Fragment> : 
+            {
+            profile !== null ? <Fragment><DashboardActions /></Fragment> : 
                 <Fragment>
                     <p>You have not set up a profile yet. click here</p>  
                     <Link to="/create-profile" className="btn btn-primary">

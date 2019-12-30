@@ -7,6 +7,8 @@ import Register from './components/auth/Register';
 import Alert from './components/utils/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/profile/CreateProfile';
+import EditProfile from './components/profile/EditProfile';
+import AddExperience from './components/profile/AddExperience';
 import PrivateRoute from './components/utils/PrivateRoute';
 
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -42,6 +44,8 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} /> 
             <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+            <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+            <PrivateRoute exact path="/add-experience" component={AddExperience} />
           </Switch>
         </section>
       </Fragment>
