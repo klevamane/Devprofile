@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import DashboardActions from './DashboardActions';
 import ListExperience from '../profile/ListExperience';
+import ListEducation from '../profile/ListEducation';
 
 // Actions
 import { getCurrentProfile } from '../../actions/profile';
@@ -27,6 +28,7 @@ import Loader from '../utils/Loader';
                 <Fragment>
                 <DashboardActions />
                 <ListExperience experienceArr={profile.experience} />
+                <ListEducation educationArr={profile.education} />
                 </Fragment> : 
                 <Fragment>
                     <p>You have not set up a profile yet. click here</p>  
