@@ -97,14 +97,15 @@ export const addExperience = (formData, history) => async dispatch => {
   }
 };
 
-const addEducation = (formData, history) => async dispatch => {
+export const addEducation = (formData, history) => async dispatch => {
+    console.log('***&*&*&*& ', formData);
   try {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const res = await axios.put(
+    const res = await axios.post(
       "http://localhost:5000/api/v1/profile/education",
       formData,
       config

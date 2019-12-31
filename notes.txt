@@ -1,0 +1,5 @@
+...formData
+// Ensure to spread the formData to subsequent changes can be added as opposed to removing fields
+
+
+    const onChange = e =>setFormData({...formData, [e.target.name]: e.target.value});
