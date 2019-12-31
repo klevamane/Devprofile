@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import DashboardActions from './DashboardActions';
+import ListExperience from '../profile/ListExperience';
 
 // Actions
 import { getCurrentProfile } from '../../actions/profile';
@@ -22,7 +23,11 @@ import Loader from '../utils/Loader';
                 <i>Welcome { user && user.firstname }</i>
             </p>
             {
-            profile !== null ? <Fragment><DashboardActions /></Fragment> : 
+            profile !== null ? 
+                <Fragment>
+                <DashboardActions />
+                <ListExperience experienceArr={profile.experience} />
+                </Fragment> : 
                 <Fragment>
                     <p>You have not set up a profile yet. click here</p>  
                     <Link to="/create-profile" className="btn btn-primary">
