@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
@@ -35,7 +35,7 @@ const Register = (props) => {// props can also be destructured as ({register, is
             password,
             confirmpwd
         }
-        props.register(newUser);
+        props.register(newUser, props.history);
     }
     if(props.isAuthenticated) {
         return <Redirect to="dashboard" />
@@ -99,4 +99,4 @@ const mapStateToProps = state => ({
 })
 
 // Add the action(s) to the connect method
-export default connect(mapStateToProps, { setAlert, register })(Register)
+export default connect(mapStateToProps, { setAlert, register })(withRouter(Register))

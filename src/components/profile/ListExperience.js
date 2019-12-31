@@ -1,19 +1,23 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux';
 import Moment from 'react-moment';
 
-const ListExperience = ({experienceArr}) => {
+// Actions
+import { deleteExperience } from '../../actions/profile';
+
+const ListExperience = ({experienceArr, deleteExperience}) => {
     const experiences = experienceArr.map(exp =>(
         <tr key={exp._id}>
             <td>{exp.company}</td>
-            <td class="hide-sm">{exp.title}</td>
+            <td className="hide-sm">{exp.title}</td>
         <td>
         <Moment format="DD/MM/YYYY">{exp.from}</Moment> - 
         
         {exp.to == null ? ('Present'): (<Moment format="DD/MM/YYYY">{exp.to}</Moment>)}
         </td>
         <td>
-              <button class="btn btn-danger">
+              <button className="btn btn-danger" onClick={e =>deleteExperience(exp._id)}>
                 Delete
               </button>
         </td>
@@ -22,13 +26,13 @@ const ListExperience = ({experienceArr}) => {
 
     return (
         <Fragment>
-             <h2 class="my-2">Experience Credentials</h2>
-      <table class="table">
+             <h2 className="my-2">Experience Credentials</h2>
+      <table className="table">
         <thead>
           <tr>
             <th>Company</th>
-            <th class="hide-sm">Title</th>
-            <th class="hide-sm">Years</th>
+            <th className="hide-sm">Title</th>
+            <th className="hide-sm">Years</th>
             <th></th>
           </tr>
         </thead>
@@ -44,5 +48,5 @@ ListExperience.propTypes = {
 
 }
 
-export default ListExperience
+export default connect(null, {deleteExperience})(ListExperience);
 

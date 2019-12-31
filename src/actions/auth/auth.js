@@ -20,7 +20,8 @@ export const loadUser = () => async dispatch => {
 
 // Register the user
 
-export const register = ({ firstname, lastname, email, password, confirmpwd }) => async dispatch => {
+export const register = ( newUser, history ) => async dispatch => {
+    const {firstname, lastname, email, password, confirmpwd} = newUser;
     const configuration = {
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +33,8 @@ export const register = ({ firstname, lastname, email, password, confirmpwd }) =
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
-        })
+        });
+        history.push('/login');
     } catch(err) {
         const errors = err.response.data;
         if(errors) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setAlert } from "./alert";
 
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from "./types";
+import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE, CLEAR_PROFILE, ACCOUNT_DELETED } from "./types";
 import setAuthenticationToken from "../utils/setAuthenticationToken";
 
 export const getCurrentProfile = () => async dispatch => {
@@ -142,7 +142,7 @@ export const deleteExperience = (id) => async dispatch => {
     } catch (error) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: error.response.statusText, status: error.response.status }
           });
     }
 }
@@ -159,7 +159,27 @@ export const deleteEducation = (id) => async dispatch => {
     } catch (error) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: { msg: error.response.statusText, status: error.response.status }
           });
     }
+}
+
+
+// Delete user account
+
+export const deleteAccount = () => async dispatch => {
+    try {
+       if(window.confirm('Are you sure? This cannot be undone')) {
+            const res = await axios.delete('http://localhost:5000/api/v1/profile');
+            dispatch({ type: CLEAR_PROFILE });
+            dispatch({ type: ACCOUNT_DELETED });
+            dispatch(setAlert('Your account has been permanently deleted'));
+        }
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+          });
+    }
+
 }

@@ -1,19 +1,23 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'react-moment';
+import { connect } from 'react-redux';
 
-const ListEducation = ({educationArr}) => {
-    const education = educationArr.map(exp =>(
-        <tr key={exp._id}>
-            <td>{exp.school}</td>
-            <td class="hide-sm">{exp.degree}</td>
+// Actions
+import { deleteEducation } from '../../actions/profile';
+
+const ListEducation = ({educationArr, deleteEducation}) => {
+    const education = educationArr.map(edu =>(
+        <tr key={edu._id}>
+            <td>{edu.school}</td>
+            <td class="hide-sm">{edu.degree}</td>
         <td>
-        <Moment format="DD/MM/YYYY">{exp.from}</Moment> - 
+        <Moment format="DD/MM/YYYY">{edu.from}</Moment> - 
         
-        {exp.to == null ? ('Present'): (<Moment format="DD/MM/YYYY">{exp.to}</Moment>)}
+        {edu.to == null ? ('Present'): (<Moment format="DD/MM/YYYY">{edu.to}</Moment>)}
         </td>
         <td>
-              <button class="btn btn-danger">
+              <button class="btn btn-danger" onClick={e =>deleteEducation(edu._id)}>
                 Delete
               </button>
         </td>
@@ -44,5 +48,5 @@ ListEducation.propTypes = {
 
 }
 
-export default ListEducation
+export default connect(null, {deleteEducation})(ListEducation)
 
